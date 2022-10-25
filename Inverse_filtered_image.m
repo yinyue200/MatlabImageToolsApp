@@ -1,4 +1,4 @@
-function g = Inverse_filtered_image(f)
+function g = Inverse_filtered_image(f,Len,Theta,D0)
 %INVERSE_FILTERED_IMAGE 逆滤波图像
 %f为退化后的输入图像 g为处理后的图像
 %%
@@ -11,7 +11,6 @@ center2 = floor(N/2);
 H = fft2(psf,M,N);
 Hs=log(abs(H)+1);
 pic_outf = fft2(f);
-D0 = 10;
 recover_pic = zeros(M,N);
 for i = 1:M
     for j = 1:N
