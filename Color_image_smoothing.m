@@ -11,19 +11,20 @@ function imOut = Color_image_smoothing(imIn,type,filtersize)
             %elseif nargin == 2
             %   filtersize = 2;
             end
+            sub=filtersize*filtersize;
             if type == "rgb"
                 im_R = imIn(:,:,1);
                 im_G = imIn(:,:,2);
                 im_B = imIn(:,:,3);
                 h = ones(filtersize,filtersize);
-                im_R = imfilter(im_R,h,'replicate');
-                im_G = imfilter(im_G,h,'replicate');
-                im_B = imfilter(im_B,h,'replicate');
+                im_R = imfilter(im_R,h,'replicate')./sub;
+                im_G = imfilter(im_G,h,'replicate')./sub;
+                im_B = imfilter(im_B,h,'replicate')./sub;
                 imOut = cat(3,im_R,im_G,im_B);
             else 
                 h = ones(filtersize,filtersize);
                 imHSI = rgb2hsi(imIn);
-                imHSI_I = imfilter(imHSI(:,:,3),h,'replicate');
+                imHSI_I = imfilter(imHSI(:,:,3),h,'replicate')./sub;
                 imtemp_hsi = cat(3,imHSI(:,:,1),imHSI(:,:,2),imHSI_I);
                 imOut = hsi2rgb(imtemp_hsi);
             end              
